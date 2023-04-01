@@ -1,0 +1,10 @@
+data/cifar10/cifar-10-*/
+data/*/*.tar.gz
+data/*/train
+data/*/test
+data/MNIST/raw
+notebooks/
+mlruns
+__pycache__
+*/__pycache__
+*/*/__pycache__
