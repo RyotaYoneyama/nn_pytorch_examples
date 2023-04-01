@@ -1,0 +1,32 @@
+version: '3'
+
+networks:
+  torch_net:
+    driver: bridge
+
+services:
+  torcn_nn:
+    image: nvcr.io/nvidia/pytorch:22.04-py3-nn-example
+    container_name: torch_container
+    tty: true
+    environment:
+      - DISPLAY=$DISPLAY
+      - LOCAL_UID=`id -u $USER` 
+      - LOCAL_GID=`id -g $USER`
+    volumes:
+      - ../:/home/ubuntu/nn_pytorch_examples
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - $HOME/.ssh:/home/ubuntu/.ssh
+    working_dir: "/home/ubuntu/nn_pytorch_examples"
+    ports:
+      - 8888:8888
+    networks:
+      - torch_net
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    command: bash
